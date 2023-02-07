@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// Controller to house tabs and root tab controllers 
 final class RMTabBarViewController: UITabBarController {
 
     override func viewDidLoad() {
@@ -40,10 +41,7 @@ final class RMTabBarViewController: UITabBarController {
             nav.navigationBar.prefersLargeTitles = true
         }
 
-                
         setViewControllers([nav1, nav2, nav3, nav4], animated: true)
     }
-    
-    
 }
 
