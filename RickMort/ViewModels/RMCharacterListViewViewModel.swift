@@ -7,19 +7,43 @@
 
 import UIKit
 
+protocol RMCharacterListViewViewModelDelegate: AnyObject {
+    func didLoadInitialCharacters()
+}
+
 final class RMCharacterListViewViewModel:NSObject {
     
-    func fetchCharacters(){
-        RMService.shared.execute(.listCharacterRequests,
-                                 expecting: RMGetAllCharacterResponse.self){
-            result in
-            switch result {
-            case .success(let model):
-                print(String(describing: model))
-            case .failure(let error):
-                print(String(describing: error))
+    public weak var delegate: RMCharacterListViewViewModelDelegate?
+    
+    private var characters: [RMCharater] = [] {
+        didSet{
+            for character in characters {
+                let viewModel = RMCharacterCollectionViewCellViewModel(
+                    charaterName: character.name, characterStatus: character.status, characterImageUrl: URL(string: character.image))
+                cellViewModels.append(viewModel)
             }
         }
+    }
+    
+    
+    private var cellViewModels: [RMCharacterCollectionViewCellViewModel] = []
+    
+    public func fetchCharacters(){
+        RMService.shared.execute(
+            .listCharacterRequests,
+            expecting: RMGetAllCharacterResponse.self){
+                [weak self] result in
+                switch result {
+                case .success(let responseModel):
+                    let results = responseModel.results
+                    self?.characters = results
+                    DispatchQueue.main.async {
+                        self?.delegate?.didLoadInitialCharacters()
+                    }
+                case .failure(let error):
+                    print(String(describing: error))
+                }
+            }
     }
 }
 
@@ -30,20 +54,18 @@ extension RMCharacterListViewViewModel: UICollectionViewDataSource, UICollection
             fatalError("Unsupported cell")
         }
         
-        let viewModel = RMCharacterCollectionViewCellViewModel(charaterName: "A", characterStatus: .alive, characterImageUrl: nil)
- 
+        let viewModel = cellViewModels[indexPath.row]
         cell.configure(with: viewModel)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return cellViewModels.count
     }
-     
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let bounds = UIScreen.main.bounds.width
         let width = (bounds-30)/2
         return CGSize(width: width, height: width * 1.5)
-        
     }
 }
