@@ -91,8 +91,7 @@ extension RMCharacterDetailViewController: UICollectionViewDelegate, UICollectio
                 fatalError()
             }
             cell.configure(with: viewModel)
-            cell.backgroundColor = .systemYellow
-            return cell
+             return cell
             
         case .information( let viewModels):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RMCharacterInfoCollectionViewCell.cellIndentifer, for: indexPath) as? RMCharacterInfoCollectionViewCell else {
@@ -100,16 +99,14 @@ extension RMCharacterDetailViewController: UICollectionViewDelegate, UICollectio
             }
             cell.configure(with: viewModels[indexPath.row])
 
-            cell.backgroundColor = .systemRed
-            return cell
+             return cell
         case .episodes(let viewModels):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RMCharacterEpisodeCollectionViewCell.cellIndentifer, for: indexPath) as? RMCharacterEpisodeCollectionViewCell else {
                 fatalError()
             }
             cell.configure(with: viewModels[indexPath.row])
 
-            cell.backgroundColor = .systemOrange
-            return cell
+             return cell
         }
     }
 }
