@@ -12,8 +12,8 @@ final class RMCharacterInfoCollectionViewCell: UICollectionViewCell {
     
     private let valueLable: UILabel = {
         let label = UILabel()
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "earth"
         label.font = .systemFont(ofSize: 22, weight: .light)
         return label
     }()
@@ -21,7 +21,6 @@ final class RMCharacterInfoCollectionViewCell: UICollectionViewCell {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Location"
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 20, weight: .medium)
         return label
@@ -76,12 +75,12 @@ final class RMCharacterInfoCollectionViewCell: UICollectionViewCell {
             iconImageView.widthAnchor.constraint(equalToConstant: 30),
             iconImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant:  35),
             iconImageView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant:  20),
-           // iconImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant:  -10),
+            // iconImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant:  -10),
             
             valueLable.leftAnchor.constraint(equalTo: iconImageView.rightAnchor, constant:  10),
             valueLable.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant:  -10 ),
-            valueLable.topAnchor.constraint(equalTo: contentView.topAnchor, constant:  36),
-            valueLable.heightAnchor.constraint(equalToConstant: 30),
+            valueLable.topAnchor.constraint(equalTo: contentView.topAnchor ),
+            valueLable.bottomAnchor.constraint(equalTo: titleContainerView.topAnchor),
         ])
         
     }
@@ -89,12 +88,18 @@ final class RMCharacterInfoCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        //valueLable.text = nil
-        //titleLabel.text = nil
-        //iconImageView.image = nil
+        valueLable.text = nil
+        titleLabel.text = nil
+        iconImageView.image = nil
+        iconImageView.tintColor = .label
+        titleLabel.textColor = .label
     }
     
     public func configure(with viewModel: RMCharacterInfoCollectionViewCellViewModel) {
-        
+        titleLabel.text = viewModel.title
+        valueLable.text = viewModel.displayValue
+        iconImageView.image = viewModel.iconImage
+        iconImageView.tintColor = viewModel.tintColor
+        titleLabel.textColor = viewModel.tintColor
     }
 }
