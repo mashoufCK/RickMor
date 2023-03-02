@@ -8,6 +8,7 @@
 import UIKit
 
 final class RMCharacterEpisodeCollectionViewCell: UICollectionViewCell {
+    
     static let cellIndentifer = "RMCharacterEpisodeCollectionViewCell"
     
     private let seasonLabel: UILabel = {
