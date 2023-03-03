@@ -8,7 +8,7 @@
 import UIKit
 
 /// Controller to show and search for Location
-final class RMLocatioViewController: UIViewController {
+final class RMLocationViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,9 +17,18 @@ final class RMLocatioViewController: UIViewController {
 
         title = "Locations"
         
+        addSearchButton()
+        
     }
     
+    private func addSearchButton(){
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(didTapShare))
 
+    }
+    
+    @objc private func didTapShare(){
+        
+    }
   
 
 }

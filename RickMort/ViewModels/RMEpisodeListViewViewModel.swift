@@ -22,13 +22,17 @@ final class RMEpisodeListViewViewModel: NSObject {
     private var isLoadingMoreCharacters = false
     
     private var cellViewModels: [RMCharacterEpisodeCollectionViewCellViewModel] = []
-
     
+    private let borderColor: [UIColor] = [.systemBlue, .systemGreen, .systemOrange, .systemPink, .systemPurple, .systemRed, .systemYellow, .systemMint, .systemIndigo]
     private var episodes: [RMEpisodes] = [] {
         didSet{
             for episode in episodes
             {
-                let viewModel = RMCharacterEpisodeCollectionViewCellViewModel(episodeDataUrl: URL(string: episode.url))
+                let viewModel = RMCharacterEpisodeCollectionViewCellViewModel(episodeDataUrl: URL(string: episode.url),
+                                                                              borderColor: borderColor.randomElement() ?? .systemBlue
+                                                                              
+                )
+                
                 
                 if !cellViewModels.contains(viewModel) {
                     cellViewModels.append(viewModel)
@@ -62,7 +66,7 @@ final class RMEpisodeListViewViewModel: NSObject {
     
     /// Paginate if additional episodes are needed
     public func fetchAdditionalEpisodes(url: URL) {
-
+        
         //Fetch episodes here
         
         guard !isLoadingMoreCharacters else {
@@ -74,7 +78,7 @@ final class RMEpisodeListViewViewModel: NSObject {
             isLoadingMoreCharacters = false
             return
         }
- 
+        
         RMService.shared.execute(request, expecting: RMGetAllEpisodesResponse.self) { [weak self] result in
             
             guard let strongSelf = self else {
@@ -98,10 +102,10 @@ final class RMEpisodeListViewViewModel: NSObject {
                     strongSelf.delegate?.didLoadMoreEpisode(
                         with: indexPathsToAdd
                     )
-
+                    
                     strongSelf.isLoadingMoreCharacters = false
                 }
-
+                
             case .failure(let failure):
                 print (String(describing: failure))
                 self?.isLoadingMoreCharacters = false
@@ -151,9 +155,9 @@ extension RMEpisodeListViewViewModel: UICollectionViewDataSource, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let bounds = UIScreen.main.bounds.width
-        let width = (bounds-30)/2
-        return CGSize(width: width, height: width * 0.8)
+        let bounds = collectionView.bounds
+        let width = bounds.width - 20
+        return CGSize(width: width, height:  100)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -169,12 +173,12 @@ extension RMEpisodeListViewViewModel: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         guard shouldShowLoadMoreIndicator,
-                !isLoadingMoreCharacters,
+              !isLoadingMoreCharacters,
               !cellViewModels.isEmpty,
               
-              let nextUrlString = apiInfo?.next,
+                let nextUrlString = apiInfo?.next,
               let url = URL(string: nextUrlString)
-              
+                
         else {
             return
         }
