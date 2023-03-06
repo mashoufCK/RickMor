@@ -14,8 +14,9 @@ protocol RMEpisodeDetailViewViewModelDelgate: AnyObject {
 final class RMEpisodeDetailViewViewModel {
     
     private let endpointUrl: URL?
-    private var dataTuple: (RMEpisodes, [RMCharacter])? {
+    private var dataTuple: (episode: RMEpisodes, characters: [RMCharacter])? {
         didSet {
+            createCellViewModels()
             delegate?.didFetchEpisodeDetails()
         }
     }
@@ -28,7 +29,7 @@ final class RMEpisodeDetailViewViewModel {
     public weak var delegate: RMEpisodeDetailViewViewModelDelgate?
     
     //lets property be read and not written
-    public private(set) var sections: [SecionType] = []
+    public private(set) var cellViewModels: [SecionType] = []
     
     // MARK: - Init
     
@@ -39,9 +40,31 @@ final class RMEpisodeDetailViewViewModel {
     // MARK: - Public
     
     
-
+    
     // MARK: - Private
-
+    
+    private func createCellViewModels(){
+        
+        guard let dataTuple = dataTuple else {
+            return
+        }
+        
+        let episode = dataTuple.episode
+        let characters = dataTuple.characters
+        
+        cellViewModels = [
+            .information(viewModels: [.init(title: "Episode Name", value: episode.name)]),
+            .information(viewModels: [.init(title: "Air Date", value: episode.air_date)]),
+            .information(viewModels: [.init(title: "Episode", value: episode.episode)]),
+            .information(viewModels: [.init(title: "Created", value: episode.created)
+                                     ]),
+            .characters(viewModel: characters.compactMap({
+                return RMCharacterCollectionViewCellViewModel(charaterName: $0.name, characterStatus: $0.status, characterImageUrl: URL(string: $0.image))
+            }))
+        ]
+        
+    }
+    
     /// Fetch backing episode model
     ///
     public func fetchEpisodeData() {
@@ -106,7 +129,7 @@ final class RMEpisodeDetailViewViewModel {
             }
         }
         group.notify(queue: .main){
-            self.dataTuple = (episode, characters
+            self.dataTuple = (episode: episode, characters: characters
             )        }
     }
 }
