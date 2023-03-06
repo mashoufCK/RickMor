@@ -7,7 +7,15 @@
 
 import UIKit
 
+protocol RMEpisodeDetailViewDelegate: AnyObject {
+    func rmEpisodeDetailView(
+        _ detail: RMEpisodeDetailView, didSelect character: RMCharacter)
+    
+}
+
 final class RMEpisodeDetailView: UIView {
+    
+    public weak var delegate: RMEpisodeDetailViewDelegate?
     
     private var viewModel: RMEpisodeDetailViewViewModel? {
         didSet {
@@ -44,7 +52,6 @@ final class RMEpisodeDetailView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("Unsupported")
-        
     }
     
     private  func addConstraints() {
@@ -63,7 +70,6 @@ final class RMEpisodeDetailView: UIView {
             collectionView.leftAnchor.constraint(equalTo: leftAnchor),
             collectionView.rightAnchor.constraint(equalTo: rightAnchor),
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            
         ])
     }
     
@@ -83,7 +89,7 @@ final class RMEpisodeDetailView: UIView {
         collectionView.dataSource = self
         collectionView.register(RMEpisodeInfoCollectionViewCell.self, forCellWithReuseIdentifier: RMEpisodeInfoCollectionViewCell.cellIdentifier)
         collectionView.register(RMCharacterCollectionViewCell.self, forCellWithReuseIdentifier: RMCharacterCollectionViewCell.cellIdentifier)
-
+        
         return collectionView
     }
     
@@ -93,7 +99,6 @@ final class RMEpisodeDetailView: UIView {
         self.viewModel = viewModel
     }
 }
-
 
 extension RMEpisodeDetailView: UICollectionViewDelegate, UICollectionViewDataSource {
     
@@ -136,7 +141,7 @@ extension RMEpisodeDetailView: UICollectionViewDelegate, UICollectionViewDataSou
             cell.configure(with: cellViewMdodels)
             
             return cell
-
+            
         case .characters(let viewModels):
             let cellViewMdodels = viewModels[indexPath.row]
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RMCharacterCollectionViewCell.cellIdentifier, for: indexPath) as? RMCharacterCollectionViewCell else {
@@ -150,7 +155,28 @@ extension RMEpisodeDetailView: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        <#code#>
+        
+        collectionView.deselectItem(at: indexPath, animated: true)
+        
+        guard let viewModel = viewModel else {
+            return
+        }
+        
+        let sections = viewModel.cellViewModels
+        
+        let sectionType = sections[indexPath.section]
+        switch
+        sectionType {
+            
+        case .information:
+            break
+            
+        case .characters:
+            guard let character = viewModel.character(at: indexPath.row) else {
+                return
+            }
+            delegate?.rmEpisodeDetailView(self, didSelect: character)
+        }
     }
 }
 
@@ -174,13 +200,13 @@ extension RMEpisodeDetailView {
         
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
         
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(100)), subitems: [item])
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(80)), subitems: [item])
         
         item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
         let section = NSCollectionLayoutSection(group: group)
         
         return section
-
+        
     }
     
     func createCharacterLayout() -> NSCollectionLayoutSection {
@@ -194,6 +220,6 @@ extension RMEpisodeDetailView {
         let section = NSCollectionLayoutSection(group: group)
         
         return section
-
+        
     }
 }
