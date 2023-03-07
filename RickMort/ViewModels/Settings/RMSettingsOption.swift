@@ -17,6 +17,26 @@ enum RMSettingsOptions: CaseIterable {
     case viewSeries
     case viewCode
     
+    var targetUrl: URL? {
+        
+        switch self {
+        case .rateApp:
+            return nil
+        case .contactUs:
+            return URL(string: "http://iosacademy.io")
+        case .terms:
+            return URL(string: "http://iosacademy.io.terms")
+        case .privacy:
+            return URL(string: "http://iosacademy.io/privacy")
+        case .apiReference:
+            return URL(string: "https://rickandmortyapi.com/documentation/#get-a-single-episode")
+        case .viewSeries:
+            return URL(string: "http://youtube.com")
+        case .viewCode:
+            return URL(string: "http://github.com")
+        }
+    }
+    
     var displayTitle: String {
         switch self {
         case .rateApp:

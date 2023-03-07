@@ -7,15 +7,17 @@
 
 import UIKit
 
-struct RMSettingsCellViewModel: Identifiable, Hashable {
+struct RMSettingsCellViewModel: Identifiable {
     
     let id = UUID()
-    
+    public let onTapHandler : (RMSettingsOptions) -> Void
+    public let type: RMSettingsOptions
+
     //MARK: - Init
-    private let type: RMSettingsOptions
     
-    init(type: RMSettingsOptions) {
+    init(type: RMSettingsOptions, onTapHandler: @escaping (RMSettingsOptions) -> Void) {
         self.type = type
+        self.onTapHandler = onTanHandler
     }
     
     //MARK : - Public
