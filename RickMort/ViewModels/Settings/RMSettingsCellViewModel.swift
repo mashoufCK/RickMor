@@ -7,8 +7,9 @@
 
 import UIKit
 
-struct RMSettingsCellViewModel {
+struct RMSettingsCellViewModel: Identifiable, Hashable {
     
+    let id = UUID()
     
     //MARK: - Init
     private let type: RMSettingsOptions
@@ -27,6 +28,6 @@ struct RMSettingsCellViewModel {
     }
     
     public var iconContainerColor: UIColor {
-        
+        return type.iconContainerColor
     }
 }
