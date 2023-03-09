@@ -19,8 +19,9 @@ final class RMLocationViewViewModel {
         didSet {
             for location in locations {
                 let cellViewModel = RMLocationTableViewCellViewModel(location: location)
-                if !cellViewModels.contains(where: cellViewModel) {                cellViewModels.append(cellViewModel)
-}
+                if !cellViewModels.contains(cellViewModel) {
+                    cellViewModels.append(cellViewModel)
+                    }
             }
         }
     }
