@@ -119,4 +119,3 @@ extension RMLocationView: UITableViewDataSource {
         return cell
     }
 }
-
