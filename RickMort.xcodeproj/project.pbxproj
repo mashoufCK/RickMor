@@ -13,6 +13,7 @@
 		C735FE0529B0082D004E879A /* RMEpisodeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C735FE0429B0082D004E879A /* RMEpisodeListView.swift */; };
 		C735FE0729B00AB7004E879A /* RMEpisodeListViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C735FE0629B00AB7004E879A /* RMEpisodeListViewViewModel.swift */; };
 		C735FE0929B039D8004E879A /* RMGetAllEpisodesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C735FE0829B039D8004E879A /* RMGetAllEpisodesResponse.swift */; };
+		C736015329D30DED00452156 /* RMSearchOptionPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C736015229D30DED00452156 /* RMSearchOptionPickerViewController.swift */; };
 		C740859729B6B2A400F8224B /* RMSettingsViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C740859629B6B2A400F8224B /* RMSettingsViewViewModel.swift */; };
 		C740859929B6B2F100F8224B /* RMSettingsCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C740859829B6B2F100F8224B /* RMSettingsCellViewModel.swift */; };
 		C740859B29B6B37500F8224B /* RMSettingsOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C740859A29B6B37500F8224B /* RMSettingsOption.swift */; };
@@ -80,6 +81,7 @@
 		C735FE0429B0082D004E879A /* RMEpisodeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMEpisodeListView.swift; sourceTree = "<group>"; };
 		C735FE0629B00AB7004E879A /* RMEpisodeListViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMEpisodeListViewViewModel.swift; sourceTree = "<group>"; };
 		C735FE0829B039D8004E879A /* RMGetAllEpisodesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMGetAllEpisodesResponse.swift; sourceTree = "<group>"; };
+		C736015229D30DED00452156 /* RMSearchOptionPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSearchOptionPickerViewController.swift; sourceTree = "<group>"; };
 		C740859629B6B2A400F8224B /* RMSettingsViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSettingsViewViewModel.swift; sourceTree = "<group>"; };
 		C740859829B6B2F100F8224B /* RMSettingsCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSettingsCellViewModel.swift; sourceTree = "<group>"; };
 		C740859A29B6B37500F8224B /* RMSettingsOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSettingsOption.swift; sourceTree = "<group>"; };
@@ -161,6 +163,15 @@
 			path = Episode;
 			sourceTree = "<group>";
 		};
+		C736015429D30EF900452156 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				C736015229D30DED00452156 /* RMSearchOptionPickerViewController.swift */,
+				C7F9D5FD29B1D14D00292BDA /* RMSearchViewController.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		C740859529B6B28800F8224B /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -204,9 +215,9 @@
 		C7735F45299C84DD0076DB49 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				C736015429D30EF900452156 /* Search */,
 				C7735F46299C85150076DB49 /* RMCharacterDetailViewController.swift */,
 				C7F1C47229AE9D9E00BEB274 /* RMEpisodeDetailViewController.swift */,
-				C7F9D5FD29B1D14D00292BDA /* RMSearchViewController.swift */,
 				C7A51A3129C97DEB00648D3D /* RMLocationDetailViewController.swift */,
 			);
 			path = Other;
@@ -549,6 +560,7 @@
 				C7A51A3529C9802E00648D3D /* RMLocationDetailView.swift in Sources */,
 				C75185C629CCE7210086C5F1 /* RMNoSearchResultViewViewModel.swift in Sources */,
 				C7F1C47329AE9D9E00BEB274 /* RMEpisodeDetailViewController.swift in Sources */,
+				C736015329D30DED00452156 /* RMSearchOptionPickerViewController.swift in Sources */,
 				C75185C329CCE6DE0086C5F1 /* RMNoSearchResultView.swift in Sources */,
 				C7CB04D92990B2B40098F45B /* RMCharacter.swift in Sources */,
 				C77BD1582998020400D9607B /* RMCharacterCollectionViewCellViewModel.swift in Sources */,
