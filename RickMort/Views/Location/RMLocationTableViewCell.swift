@@ -9,7 +9,7 @@ import UIKit
 
 class RMLocationTableViewCell: UITableViewCell {
 
-    static let indentifier = "RMLocationTableViewCell"
+    static let cellIdentifier = "RMLocationTableViewCell"
     
     private let nameLabel: UILabel = {
         let label = UILabel()

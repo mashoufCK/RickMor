@@ -30,7 +30,7 @@ final class RMLocationView: UIView {
         let table = UITableView(frame: .zero, style: .grouped)
         table.translatesAutoresizingMaskIntoConstraints = false
         table.alpha = 0
-        table.register(RMLocationTableViewCell.self, forCellReuseIdentifier: RMLocationTableViewCell.indentifier )
+        table.register(RMLocationTableViewCell.self, forCellReuseIdentifier: RMLocationTableViewCell.cellIdentifier )
         return table
     }()
     
@@ -111,7 +111,7 @@ extension RMLocationView: UITableViewDataSource {
         guard let cellViewModels = viewModel?.cellViewModels else {
             fatalError()
         }
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: RMLocationTableViewCell.indentifier, for: indexPath) as? RMLocationTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: RMLocationTableViewCell.cellIdentifier, for: indexPath) as? RMLocationTableViewCell else {
             fatalError()
         }
         let cellViewModel = cellViewModels[indexPath.row]
