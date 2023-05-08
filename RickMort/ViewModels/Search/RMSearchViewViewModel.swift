@@ -21,10 +21,12 @@ final class RMSearchViewViewModel {
     private var searchResultHandler: ((RMSearchResultViewModel) -> Void)?
     
     private var noResultsHandler: (() -> Void)?
-
+    
     private var optionMap: [RMSearchInputViewViewModel.DynamicOption : String] = [:]
     
     private var searchText = ""
+    
+    private var searchResultModel: Codable?
     
     // MARK: - Init
     
@@ -44,7 +46,7 @@ final class RMSearchViewViewModel {
     }
     
     public func executeSearch() {
-      
+        
         
         //Build argument
         var queryParams: [URLQueryItem] = [
@@ -87,7 +89,7 @@ final class RMSearchViewViewModel {
             case .success (let model):
                 // Episodes, characters: collectionview location tableview
                 self?.processSearchResults(model: model)
-               
+                
                 break
             case .failure:
                 self?.handleNoResults()
@@ -104,23 +106,24 @@ final class RMSearchViewViewModel {
             resultVM =  .characters(characterResults.results.compactMap({
                 return RMCharacterCollectionViewCellViewModel(
                     charaterName: $0.name, characterStatus: $0.status, characterImageUrl: URL(string:  $0.image))
-                }))
-         }
+            }))
+        }
         
         else if let episodesResult = model as? RMGetAllEpisodesResponse {
             resultVM =  .epidoses(episodesResult.results.compactMap({
                 return RMCharacterEpisodeCollectionViewCellViewModel(episodeDataUrl: URL(string:  $0.url))
-                }))
+            }))
         }
         else if let locationResult = model as? RMGetAllLocationsResponse {
             resultVM =  .locations(locationResult.results.compactMap({
                 return RMLocationTableViewCellViewModel(location: $0)
-                }))
+            }))
             
         }
         
         
         if let results = resultVM {
+            self.searchResultModel = model
             self.searchResultHandler?(results)
         }
         else {
@@ -147,4 +150,13 @@ final class RMSearchViewViewModel {
         
         self.optionMapUpdateBlock = block
     }
+        
+    public func locationSearchResult(at index: Int) -> RMLocation? {
+        
+        guard let searchModel = searchResultModel as? RMGetAllLocationsResponse else {
+            return nil
+        }
+        return searchModel.results[index]
+    }
+    
 }
