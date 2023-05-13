@@ -96,25 +96,40 @@ final class RMSearchViewController: UIViewController {
 // MARK: - RMSearchViewDelegate
 
 extension RMSearchViewController: RMSearchViewDelegate {
-
+    
     
     
     func rmSearchView(_ searchView: RMSearchView, didSelectOption option: RMSearchInputViewViewModel.DynamicOption) {
-    
+        
         let vc = RMSearchOptionPickerViewController(option: option) { [weak self ] selection in
             DispatchQueue.main.async {
                 self?.viewModel.set(value: selection, for: option)
-
+                
             }
         }
         vc.sheetPresentationController?.detents = [.medium()]
         vc.sheetPresentationController?.prefersGrabberVisible = true
         present(vc, animated: true)
     }
-
+    
     func rmSearchView(_ searchView: RMSearchView, didSelectLocation location: RMLocation) {
         let vc = RMLocationDetailViewController(location: location)
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
     }
+    
+    func rmSearchView(_ searchView: RMSearchView, didSelectCharacter character: RMCharacter) {
+        let vc = RMCharacterDetailViewController(viewModel: .init(character: character))
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
+    }
+
+    func rmSearchView(_ searchView: RMSearchView, didSelectEpisode episode: RMEpisodes) {
+        
+        let vc = RMEpisodeDetailViewController(url: URL(string: episode.url))
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
+        
+    }
+    
 }
